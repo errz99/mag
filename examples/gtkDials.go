@@ -21,7 +21,9 @@ func mainWindow() {
 	cR := "    |"
 
 	window, _ := gtk.WindowNew(gtk.WINDOW_TOPLEVEL)
+	window.SetPosition(gtk.WIN_POS_CENTER)	
 	window.SetTitle("Dialogs")
+
 	window.Connect("destroy", func() {
 		gtk.MainQuit()
 	})

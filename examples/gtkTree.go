@@ -23,7 +23,9 @@ func mainWindow() {
 	cR := "    |"
 
 	window, _ := gtk.WindowNew(gtk.WINDOW_TOPLEVEL)
-	window.SetTitle("Dialogs")
+	window.SetPosition(gtk.WIN_POS_CENTER)
+	window.SetTitle("Tree View")
+
 	window.Connect("destroy", func() {
 		gtk.MainQuit()
 	})
@@ -134,10 +136,10 @@ func musiciansTree(win gtk.IWindow) (gtk.ResponseType, int, string) {
 			selected, _ = strconv.Atoi(ps)
 			iter, _ := store.GetIter(path)
 			first, _ := store.GetValue(iter, 1)
-			second, _ := store.GetValue(iter, 2)
+			last, _ := store.GetValue(iter, 2)
 			firstName, _ := first.GetString()
-			secondName, _ := second.GetString()
-			name = firstName + " " + secondName
+			lastName, _ := last.GetString()
+			name = firstName + " " + lastName
 		}
 	}
 
