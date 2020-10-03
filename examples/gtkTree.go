@@ -67,8 +67,10 @@ func mainWindow() {
 
 			switch name {
 			case "1":
-				resp := musiciansTree(window)
-				fmt.Println(resp)
+				resp, sel, name := musiciansTree(window)
+				if resp != -6 {
+					fmt.Println("Musician selected:", sel, name)
+				}
 
 			case "2":
 				gtk.MainQuit()
@@ -81,7 +83,7 @@ func mainWindow() {
 	window.ShowAll()
 }
 
-func musiciansTree(win gtk.IWindow) gtk.ResponseType {
+func musiciansTree(win gtk.IWindow) (gtk.ResponseType, int, string) {
 	dial, _ := gtk.DialogNew()
 	dial.SetTransientFor(win)
 	dial.SetTitle("Great Musicians")
@@ -114,6 +116,36 @@ func musiciansTree(win gtk.IWindow) gtk.ResponseType {
 	treeview.SetMarginBottom(8)
 	content.Add(treeview)
 
+	var presel string
+	var path *gtk.TreePath
+	var selected int
+	var name string
+
+	if presel != "" {
+		iter, _ := store.GetIterFromString(presel)
+		tsel, _ := treeview.GetSelection()
+		tsel.SelectIter(iter)
+	}
+
+	selectMusicianName := func() {
+		path, _ = treeview.GetCursor()
+		ps := path.String()
+		if ps != "" {
+			selected, _ = strconv.Atoi(ps)
+			iter, _ := store.GetIter(path)
+			first, _ := store.GetValue(iter, 1)
+			second, _ := store.GetValue(iter, 2)
+			firstName, _ := first.GetString()
+			secondName, _ := second.GetString()
+			name = firstName + " " + secondName
+		}
+	}
+
+	treeview.Connect("row-activated", func() {
+		selectMusicianName()
+		dial.Destroy()
+	})
+
 	// Buttons
 	dial.AddButton("Cancel", -6)
 	dial.AddButton("OK", -5)
@@ -121,6 +153,10 @@ func musiciansTree(win gtk.IWindow) gtk.ResponseType {
 	dial.ShowAll()
 
 	answer := dial.Run()
+	if answer != -1 {
+		selectMusicianName()
+	}
 	dial.Destroy()
-	return answer
+
+	return answer, selected, name
 }
