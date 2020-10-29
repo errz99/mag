@@ -125,26 +125,36 @@ func MultiEntries(title, head string, entryLabels, entryTexts []string,
 }
 
 // ChooseAFile returns a file name (with path included)
-func ChooseAFileForOpen(title, current string, win gtk.IWindow) (gtk.ResponseType, string) {
-	fchooser, _ := gtk.FileChooserDialogNewWith2Buttons(title, win,
-		gtk.FILE_CHOOSER_ACTION_OPEN, "Open", -5, "Cancel", -6)
+func ChooseAFileForOpen(title, current string, win gtk.IWindow) (gtk.ResponseType, string, error) {
+	fchooser, err := gtk.FileChooserDialogNewWith2Buttons(
+		title, win, gtk.FILE_CHOOSER_ACTION_OPEN, "Cancel", -6, "Open", -5)
+
+	if err != nil {
+		return 0, "", err
+	}
+
 	fchooser.SetCurrentFolder(current)
-	resp := fchooser.Run()
-	fname := fchooser.GetFilename()
+	response := fchooser.Run()
+	filename := fchooser.GetFilename()
 	fchooser.Destroy()
-	return resp, fname
+	return response, filename, nil
 }
 
 // ChooseAFileForSave returns a file name (with path included)
-func ChooseAFileForSave(title, current string, win gtk.IWindow) (gtk.ResponseType, string) {
-	fchooser, _ := gtk.FileChooserDialogNewWith2Buttons(title, win,
-		gtk.FILE_CHOOSER_ACTION_SAVE, "OK", -5, "Cancel", -6)
+func ChooseAFileForSave(title, current string, win gtk.IWindow) (gtk.ResponseType, string, error) {
+	fchooser, err := gtk.FileChooserDialogNewWith2Buttons(
+		title, win, gtk.FILE_CHOOSER_ACTION_SAVE, "Cancel", -6, "Save", -5)
+
+	if err != nil {
+		return 0, "", err
+	}
+
 	fchooser.SetCurrentFolder(current)
-	resp := fchooser.Run()
-	fname := fchooser.GetFilename()
+	response := fchooser.Run()
+	filename := fchooser.GetFilename()
 	fchooser.Destroy()
-	return resp, fname
-}	
+	return response, filename, nil
+}
 
 // ShowEditText shows a text in a TextView and returns its edition
 func ShowEditText(title, head, file, text string, parent gtk.IWindow) (gtk.ResponseType, string) {

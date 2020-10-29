@@ -1,6 +1,7 @@
 package main
 
 import (
+	"os"
 	"strconv"
 	"strings"
 
@@ -16,12 +17,14 @@ func main() {
 
 }
 
+var home = os.Getenv("HOME")
+
 func mainWindow() {
 	cL := "|    "
 	cR := "    |"
 
 	window, _ := gtk.WindowNew(gtk.WINDOW_TOPLEVEL)
-	window.SetPosition(gtk.WIN_POS_CENTER)	
+	window.SetPosition(gtk.WIN_POS_CENTER)
 	window.SetTitle("Dialogs")
 
 	window.Connect("destroy", func() {
@@ -43,7 +46,8 @@ func mainWindow() {
 		"Info, Warning, Error",
 		"Question Dialog",
 		"Two Labels",
-		"Choose A File",
+		"Open a File",
+		"Save a File",
 		"One Entry",
 		"Multi Entries",
 		"Show Edit Text",
@@ -83,18 +87,24 @@ func mainWindow() {
 				dials.TwoLabels("Title", "Text One", "Text Two", window)
 
 			case "4":
-				resp, file := dials.ChooseAFile("Select a File", window)
+				resp, file, _ := dials.ChooseAFileForOpen("Open File", home, window)
 				if resp == -5 {
-					dials.Message(0, 0, "Info", "File Selected", file, window)
+					dials.Message(0, 0, "Info", "File Selected for Open", file, window)
 				}
 
 			case "5":
+				resp, file, _ := dials.ChooseAFileForSave("Save File", home, window)
+				if resp == -5 {
+					dials.Message(0, 0, "Info", "File Selected for Save", file, window)
+				}
+
+			case "6":
 				resp, text := dials.OneEntry("Title", "Head", "Label", "Entry text", true, window)
 				if resp == -5 {
 					dials.Message(0, 0, "Info", "Entry text", text, window)
 				}
 
-			case "6":
+			case "7":
 				resp, texts := dials.MultiEntries("Title", "Head",
 					[]string{"Label1", "Label2"},
 					[]string{"Entry1 text", "Entry2 text"},
@@ -103,7 +113,7 @@ func mainWindow() {
 					dials.Message(0, 0, "Info", "Entries texts", texts[0]+"\n...", window)
 				}
 
-			case "7":
+			case "8":
 				editable := "This text can be edited\nand returned."
 				resp, edited := dials.ShowEditText("Title", "Head",
 					"file text here\n and here", editable, window)
@@ -111,7 +121,7 @@ func mainWindow() {
 					dials.Message(0, 0, "Info", "Edited Text", edited, window)
 				}
 
-			case "8":
+			case "9":
 				gtk.MainQuit()
 
 			default:
