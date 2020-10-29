@@ -1,8 +1,6 @@
 package dials
 
 import (
-	"os"
-
 	"github.com/gotk3/gotk3/gtk"
 )
 
@@ -127,15 +125,26 @@ func MultiEntries(title, head string, entryLabels, entryTexts []string,
 }
 
 // ChooseAFile returns a file name (with path included)
-func ChooseAFile(head string, win gtk.IWindow) (gtk.ResponseType, string) {
-	fchooser, _ := gtk.FileChooserDialogNewWith2Buttons(head, win,
+func ChooseAFileForOpen(title, current string, win gtk.IWindow) (gtk.ResponseType, string) {
+	fchooser, _ := gtk.FileChooserDialogNewWith2Buttons(title, win,
 		gtk.FILE_CHOOSER_ACTION_OPEN, "Open", -5, "Cancel", -6)
-	fchooser.SetCurrentFolder(os.Getenv("HOME") + "/")
+	fchooser.SetCurrentFolder(current)
 	resp := fchooser.Run()
 	fname := fchooser.GetFilename()
 	fchooser.Destroy()
 	return resp, fname
 }
+
+// ChooseAFileForSave returns a file name (with path included)
+func ChooseAFileForSave(title, current string, win gtk.IWindow) (gtk.ResponseType, string) {
+	fchooser, _ := gtk.FileChooserDialogNewWith2Buttons(title, win,
+		gtk.FILE_CHOOSER_ACTION_SAVE, "OK", -5, "Cancel", -6)
+	fchooser.SetCurrentFolder(current)
+	resp := fchooser.Run()
+	fname := fchooser.GetFilename()
+	fchooser.Destroy()
+	return resp, fname
+}	
 
 // ShowEditText shows a text in a TextView and returns its edition
 func ShowEditText(title, head, file, text string, parent gtk.IWindow) (gtk.ResponseType, string) {
