@@ -37,7 +37,7 @@ func Question(w, h int, title, msg string, win gtk.IWindow) gtk.ResponseType {
 
 // OneEntry shows a dialog with an entry widget
 func OneEntry(title, head, entryLabel, entryText string,
-	visible bool, win *gtk.Window) (gtk.ResponseType, string) {
+	visible bool, win gtk.IWindow) (gtk.ResponseType, string) {
 
 	dial, _ := gtk.DialogNew()
 	dial.SetTransientFor(win)
@@ -73,7 +73,7 @@ func OneEntry(title, head, entryLabel, entryText string,
 
 // MultiEntries shows a dialog with multiple entries
 func MultiEntries(title, head string, entryLabels, entryTexts []string,
-	visibles []bool, win *gtk.Window) (gtk.ResponseType, []string) {
+	visibles []bool, win gtk.IWindow) (gtk.ResponseType, []string) {
 
 	dial, _ := gtk.DialogNew()
 	dial.SetTransientFor(win)
@@ -122,6 +122,44 @@ func MultiEntries(title, head string, entryLabels, entryTexts []string,
 
 	dial.Destroy()
 	return answer, entryNames
+}
+
+// OnePassword returns a password (response -5 for Ok button and -1 for activate event)
+func OnePassword(title string, win gtk.IWindow) (gtk.ResponseType, string) {
+	dial, _ := gtk.DialogNew()
+	dial.SetTransientFor(win)
+	dial.SetTitle(title)
+
+	content, _ := dial.GetContentArea()
+	content.SetSpacing(4)
+
+	hbox, _ := gtk.BoxNew(gtk.ORIENTATION_HORIZONTAL, 4)
+	entry, _ := gtk.EntryNew()
+	entry.SetWidthChars(32)
+	entry.SetVisibility(false)
+	entry.SetAlignment(0.5)
+	hbox.PackStart(entry, true, true, 4)
+
+	content.PackStart(hbox, false, true, 4)
+
+	dial.AddButton("OK", -5)
+	dial.SetDefaultResponse(-6)
+	dial.ShowAll()
+
+	var answer gtk.ResponseType = -6
+	var entrName string
+
+	entry.Connect("changed", func() {
+		entrName, _ = entry.GetText()
+	})
+
+	entry.Connect("activate", func() {
+		dial.Destroy()
+	})
+
+	answer = dial.Run()
+	dial.Destroy()
+	return answer, entrName
 }
 
 // ChooseAFile returns a file name (with path included)

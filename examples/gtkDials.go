@@ -50,6 +50,7 @@ func mainWindow() {
 		"Save a File",
 		"One Entry",
 		"Multi Entries",
+		"One Password",
 		"Show Edit Text",
 		"Exit"}
 
@@ -114,6 +115,12 @@ func mainWindow() {
 				}
 
 			case "8":
+				resp, passw := dials.OnePassword("Title", window)
+				if resp == -5 || resp == -1 {
+					dials.Message(0, 0, "Info", "Entry text", passw, window)
+				}
+
+			case "9":
 				editable := "This text can be edited\nand returned."
 				resp, edited := dials.ShowEditText("Title", "Head",
 					"file text here\n and here", editable, window)
@@ -121,7 +128,7 @@ func mainWindow() {
 					dials.Message(0, 0, "Info", "Edited Text", edited, window)
 				}
 
-			case "9":
+			case "10":
 				gtk.MainQuit()
 
 			default:

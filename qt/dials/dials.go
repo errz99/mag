@@ -4,26 +4,25 @@ package dials
 
 import (
 	//"fmt"
-    //"os"
+	//"os"
 
 	"github.com/therecipe/qt/core"
 	//"github.com/therecipe/qt/gui"
-	"github.com/therecipe/qt/widgets"	
+	"github.com/therecipe/qt/widgets"
 )
-
 
 // Menu Help
 func aboutDialog() {
 	//widgets.QMessageBox.About()
 
 	// about, _ := gtk.AboutDialogNew()
- //    about.SetTransientFor(mwin)
- //    about.SetAuthors([]string{"M Arias"})
- //    about.SetComments("Un comentario aqui")
- //    about.SetCopyright("Copyryght aqui")
- //    about.SetProgramName("Pasun")
- //    about.SetVersion(VERSION)
- //    about.SetWebsite("www.arteop.com")
+	//    about.SetTransientFor(mwin)
+	//    about.SetAuthors([]string{"M Arias"})
+	//    about.SetComments("Un comentario aqui")
+	//    about.SetCopyright("Copyryght aqui")
+	//    about.SetProgramName("Pasun")
+	//    about.SetVersion(VERSION)
+	//    about.SetWebsite("www.arteop.com")
 
 	// about.ShowAll()
 	// about.Run()
@@ -36,78 +35,79 @@ func aboutDialog() {
 //var md2a = "<span lang=\"utf-8\"><tt>"
 //var md2b =	"</tt></span>"
 
-// Info, Warning, Error, ""
+// Message IWE, for Info, Warning, Error, "", dialogs
 func MessageIWE(w, h int, class, title, mess string, win *widgets.QMainWindow) {
-    mbox := widgets.NewQMessageBox(win)
+	mbox := widgets.NewQMessageBox(win)
 
-   	switch class {
-    case "Info":
-        mbox.SetIcon(widgets.QMessageBox__Information)
-    
-    case "Question":
-        mbox.SetIcon(widgets.QMessageBox__Question)
-        mbox.AddButton3(widgets.QMessageBox__Cancel)
-        mbox.AddButton3(widgets.QMessageBox__Ok)
-        mbox.SetDefaultButton2(widgets.QMessageBox__Cancel)
-    
-    case "Warning":
-        mbox.SetIcon(widgets.QMessageBox__Warning)
+	switch class {
+	case "Info":
+		mbox.SetIcon(widgets.QMessageBox__Information)
 
-    case "Error":
-        mbox.SetIcon(widgets.QMessageBox__Critical)
+	case "Question":
+		mbox.SetIcon(widgets.QMessageBox__Question)
+		mbox.AddButton3(widgets.QMessageBox__Cancel)
+		mbox.AddButton3(widgets.QMessageBox__Ok)
+		mbox.SetDefaultButton2(widgets.QMessageBox__Cancel)
 
-    default:
-        mbox.SetIcon(widgets.QMessageBox__NoIcon)
-    }
+	case "Warning":
+		mbox.SetIcon(widgets.QMessageBox__Warning)
 
-    mbox.SetWindowTitle(class)
-    mbox.SetText(title)
-    mbox.SetInformativeText(mess)
-    mbox.Show()
+	case "Error":
+		mbox.SetIcon(widgets.QMessageBox__Critical)
+
+	default:
+		mbox.SetIcon(widgets.QMessageBox__NoIcon)
+	}
+
+	mbox.SetWindowTitle(class)
+	mbox.SetText(title)
+	mbox.SetInformativeText(mess)
+	mbox.Show()
 }
 
+// MessageIWED ...
 func MessageIWED(w, h int, class, title, mess string, win *widgets.QDialog) {
-    mbox := widgets.NewQMessageBox(win)
+	mbox := widgets.NewQMessageBox(win)
 
-   	switch class {
-    case "Info":
-        mbox.SetIcon(widgets.QMessageBox__Information)
-    
-    case "Question":
-        mbox.SetIcon(widgets.QMessageBox__Question)
-        mbox.AddButton3(widgets.QMessageBox__Cancel)
-        mbox.AddButton3(widgets.QMessageBox__Ok)
-        mbox.SetDefaultButton2(widgets.QMessageBox__Cancel)
-    
-    case "Warning":
-        mbox.SetIcon(widgets.QMessageBox__Warning)
+	switch class {
+	case "Info":
+		mbox.SetIcon(widgets.QMessageBox__Information)
 
-    case "Error":
-        mbox.SetIcon(widgets.QMessageBox__Critical)
+	case "Question":
+		mbox.SetIcon(widgets.QMessageBox__Question)
+		mbox.AddButton3(widgets.QMessageBox__Cancel)
+		mbox.AddButton3(widgets.QMessageBox__Ok)
+		mbox.SetDefaultButton2(widgets.QMessageBox__Cancel)
 
-    default:
-        mbox.SetIcon(widgets.QMessageBox__NoIcon)
-    }
+	case "Warning":
+		mbox.SetIcon(widgets.QMessageBox__Warning)
 
-    mbox.SetWindowTitle(class)
-    mbox.SetText(title)
-    mbox.SetInformativeText(mess)
-    mbox.Show()
+	case "Error":
+		mbox.SetIcon(widgets.QMessageBox__Critical)
+
+	default:
+		mbox.SetIcon(widgets.QMessageBox__NoIcon)
+	}
+
+	mbox.SetWindowTitle(class)
+	mbox.SetText(title)
+	mbox.SetInformativeText(mess)
+	mbox.Show()
 }
 
-// Question dialog
+// MessageQuestion dialog
 func MessageQuestion(w, h int, title, mess string, win *widgets.QMainWindow) int {
-    dialog := widgets.NewQMessageBox(win)
-    answer := -6
+	dialog := widgets.NewQMessageBox(win)
+	answer := -6
 
-    dialog.SetWindowTitle("Question")
-    dialog.SetText(title)
-    dialog.SetInformativeText(mess)
+	dialog.SetWindowTitle("Question")
+	dialog.SetText(title)
+	dialog.SetInformativeText(mess)
 
-    dialog.SetIcon(widgets.QMessageBox__Question)
-    dialog.AddButton3(widgets.QMessageBox__Cancel)
-    dialog.AddButton3(widgets.QMessageBox__Ok)
-    dialog.SetDefaultButton2(widgets.QMessageBox__Cancel)
+	dialog.SetIcon(widgets.QMessageBox__Question)
+	dialog.AddButton3(widgets.QMessageBox__Cancel)
+	dialog.AddButton3(widgets.QMessageBox__Ok)
+	dialog.SetDefaultButton2(widgets.QMessageBox__Cancel)
 
 	dialog.ConnectButtonClicked(func(button *widgets.QAbstractButton) {
 		if button.Text() == "Ok" {
@@ -115,24 +115,24 @@ func MessageQuestion(w, h int, title, mess string, win *widgets.QMainWindow) int
 		}
 	})
 
-    dialog.Show()
-    answer = dialog.Exec()
-    
-    if answer == 1024 {
-    	answer = -5 
-    } else {
-    	 answer = -6 
-    }
+	dialog.Show()
+	answer = dialog.Exec()
 
-    return answer
+	if answer == 1024 {
+		answer = -5
+	} else {
+		answer = -6
+	}
+
+	return answer
 }
 
-// Dialog for two labels
+// DialogTwoLabels for two labels
 func DialogTwoLabels(title, text1, text2 string, win *widgets.QMainWindow) {
-	dialog := widgets.NewQDialog(win, 0)	
+	dialog := widgets.NewQDialog(win, 0)
 	dialog.SetModal(true)
 	dialog.SetWindowTitle(title)
-	dialog.SetMinimumSize2(200, 120)	
+	dialog.SetMinimumSize2(200, 120)
 
 	vbox := widgets.NewQVBoxLayout()
 	dialog.SetLayout(vbox)
@@ -155,17 +155,17 @@ func DialogTwoLabels(title, text1, text2 string, win *widgets.QMainWindow) {
 	dialog.Show()
 }
 
-// Dialog for an entry alone
+// DialogEntry for an entry alone
 func DialogEntry(title, head, entryLabel, entryPre string,
-		visible bool, win *widgets.QMainWindow) (int, string) {
-	dialog := widgets.NewQDialog(win, 0)	
+	visible bool, win *widgets.QMainWindow) (int, string) {
+	dialog := widgets.NewQDialog(win, 0)
 	dialog.SetModal(true)
 	dialog.SetWindowTitle(title)
-	dialog.SetMinimumSize2(200, 120)	
+	dialog.SetMinimumSize2(200, 120)
 
 	vbox := widgets.NewQVBoxLayout()
 	dialog.SetLayout(vbox)
-	
+
 	entry := widgets.NewQWidget(dialog, 0)
 	form := widgets.NewQFormLayout(entry)
 	entry.SetLayout(form)
@@ -197,7 +197,7 @@ func DialogEntry(title, head, entryLabel, entryPre string,
 		answer = -5
 		if lineEdit.Text() != "" {
 			entryText = lineEdit.Text()
-		}	
+		}
 		dialog.DestroyQDialog()
 	})
 
@@ -211,16 +211,16 @@ func DialogEntry(title, head, entryLabel, entryPre string,
 	return answer, entryText
 }
 
-// Dialog for multiple entries
+// DialogEntries for multiple entries
 func DialogEntries(title, head string, entryLabels, entryTexts []string,
-		visibles []bool, win *widgets.QMainWindow) (int, []string) {
-	dialog := widgets.NewQDialog(win, 0)	
+	visibles []bool, win *widgets.QMainWindow) (int, []string) {
+	dialog := widgets.NewQDialog(win, 0)
 	dialog.SetModal(true)
 	dialog.SetWindowTitle(title)
 
 	vbox := widgets.NewQVBoxLayout()
 	dialog.SetLayout(vbox)
-	
+
 	entry := widgets.NewQWidget(dialog, 0)
 	form := widgets.NewQFormLayout(entry)
 	entry.SetLayout(form)
@@ -245,7 +245,7 @@ func DialogEntries(title, head string, entryLabels, entryTexts []string,
 		lineEdit.SetText(entryText)
 		form.AddRow3(entryLabels[i], lineEdit)
 		lineEdits = append(lineEdits, lineEdit)
-	}	
+	}
 
 	cancelButton := widgets.NewQPushButton2("Cancel", dialog)
 	hbox.AddWidget(cancelButton, 0, core.Qt__AlignRight)
@@ -273,13 +273,32 @@ func DialogEntries(title, head string, entryLabels, entryTexts []string,
 	return answer, lineTexts
 }
 
-// Dialog that returns a file name (and path)
-//func GetAFileDialog(head string, win *gtk.Window) (gtk.ResponseType, string) {
-//	fchooser, _ := gtk.FileChooserDialogNewWith2Buttons(head, win,
-//		gtk.FILE_CHOOSER_ACTION_OPEN, "Open", -5, "Cancel", -6)
-//	fchooser.SetCurrentFolder(os.Getenv("HOME") + "/")
-//	resp := fchooser.Run()
-//	fname := fchooser.GetFilename()
-//	fchooser.Destroy()
-//	return resp, fname
-//}
+// FileDialogForOpen returns a file path selected from of a dialog
+func FileDialogForOpen(parent widgets.QWidget_ITF, caption, dir, filter string) (int, string) {
+	fileDialog := widgets.NewQFileDialog2(parent, caption, dir, filter)
+	fileDialog.SetFileMode(widgets.QFileDialog__AnyFile)
+
+	resp := fileDialog.Exec()
+	if resp == 1 && fileDialog.SelectedNameFilter() == filter {
+		if len(fileDialog.SelectedFiles()) == 1 {
+			return resp, fileDialog.SelectedFiles()[0]
+		}
+	}
+
+	return 0, ""
+}
+
+// FileDialogForSave returns a file path selected from of a dialog
+func FileDialogForSave(parent widgets.QWidget_ITF, caption, dir, filter string) (int, string) {
+	fileDialog := widgets.NewQFileDialog2(parent, caption, dir, filter)
+	fileDialog.SetAcceptMode(widgets.QFileDialog__AcceptSave)
+
+	resp := fileDialog.Exec()
+	if resp == 1 && fileDialog.SelectedNameFilter() == filter {
+		if len(fileDialog.SelectedFiles()) == 1 {
+			return resp, fileDialog.SelectedFiles()[0]
+		}
+	}
+
+	return 0, ""
+}
