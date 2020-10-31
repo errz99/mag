@@ -273,6 +273,55 @@ func DialogEntries(title, head string, entryLabels, entryTexts []string,
 	return answer, lineTexts
 }
 
+// AccessKeyDialog ask for a password or access key.
+func AccessKeyDialog(title string, win *widgets.QMainWindow) (int, string) {
+	dialog := widgets.NewQDialog(win, 0)
+	dialog.SetModal(true)
+	dialog.SetWindowTitle(title)
+	dialog.SetMinimumSize2(200, 1)
+
+	vbox := widgets.NewQVBoxLayout()
+	dialog.SetLayout(vbox)
+
+	entry := widgets.NewQWidget(dialog, 0)
+	form := widgets.NewQFormLayout(entry)
+	entry.SetLayout(form)
+
+	label := widgets.NewQLabel2("Type Key", dialog, 0)
+	label.SetStyleSheet("color: green;")
+
+	buttons := widgets.NewQWidget(dialog, 0)
+	hbox := widgets.NewQHBoxLayout()
+	buttons.SetLayout(hbox)
+
+	vbox.AddWidget(label, 0, core.Qt__AlignCenter)
+	vbox.AddWidget(entry, 0, core.Qt__AlignCenter)
+	vbox.AddWidget(buttons, 0, core.Qt__AlignRight)
+
+	lineEdit := widgets.NewQLineEdit(nil)
+	lineEdit.SetMinimumSize2(200, 1)
+	lineEdit.SetAlignment(core.Qt__AlignCenter)
+	lineEdit.SetEchoMode(widgets.QLineEdit__Password)
+	form.AddRow3("", lineEdit)
+
+	okButton := widgets.NewQPushButton2("Ok", dialog)
+	hbox.AddWidget(okButton, 0, core.Qt__AlignRight)
+
+	var answer = -6
+	var entryText string
+
+	okButton.ConnectClicked(func(bool) {
+		answer = -5
+		entryText = lineEdit.Text()
+		dialog.DestroyQDialog()
+	})
+
+	dialog.Show()
+	dialog.Exec()
+
+	return answer, entryText
+}
+
 // FileDialogForOpen returns a file path selected from of a dialog
 func FileDialogForOpen(parent widgets.QWidget_ITF, caption, dir, filter string) (int, string) {
 	fileDialog := widgets.NewQFileDialog2(parent, caption, dir, filter)

@@ -124,8 +124,8 @@ func MultiEntries(title, head string, entryLabels, entryTexts []string,
 	return answer, entryNames
 }
 
-// OnePassword returns a password (response -5 for Ok button and -1 for activate event)
-func OnePassword(title string, win gtk.IWindow) (gtk.ResponseType, string) {
+// AccessKeyDialog returns a password (response -5 for Ok button and -1 for activate event)
+func AccessKeyDialog(title string, win gtk.IWindow) (gtk.ResponseType, string) {
 	dial, _ := gtk.DialogNew()
 	dial.SetTransientFor(win)
 	dial.SetTitle(title)
