@@ -125,13 +125,19 @@ func MultiEntries(title, head string, entryLabels, entryTexts []string,
 }
 
 // AccessKeyDialog returns a password (response -5 for Ok button and -1 for activate event)
-func AccessKeyDialog(title string, win gtk.IWindow) (gtk.ResponseType, string) {
+func AccessKeyDialog(title, head string, win gtk.IWindow) (gtk.ResponseType, string) {
 	dial, _ := gtk.DialogNew()
 	dial.SetTransientFor(win)
 	dial.SetTitle(title)
 
 	content, _ := dial.GetContentArea()
 	content.SetSpacing(4)
+
+	label, _ := gtk.LabelNew(head)
+	label.SetMarginTop(4)
+	label.SetMarginBottom(4)
+	label.SetMarkup("<span color=\"green\">" + head + "</span>")
+	content.Add(label)
 
 	hbox, _ := gtk.BoxNew(gtk.ORIENTATION_HORIZONTAL, 4)
 	entry, _ := gtk.EntryNew()

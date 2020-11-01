@@ -274,7 +274,7 @@ func DialogEntries(title, head string, entryLabels, entryTexts []string,
 }
 
 // AccessKeyDialog ask for a password or access key.
-func AccessKeyDialog(title string, win *widgets.QMainWindow) (int, string) {
+func AccessKeyDialog(title, head string, win *widgets.QMainWindow) (int, string) {
 	dialog := widgets.NewQDialog(win, 0)
 	dialog.SetModal(true)
 	dialog.SetWindowTitle(title)
@@ -287,7 +287,8 @@ func AccessKeyDialog(title string, win *widgets.QMainWindow) (int, string) {
 	form := widgets.NewQFormLayout(entry)
 	entry.SetLayout(form)
 
-	label := widgets.NewQLabel2("Type Key", dialog, 0)
+	//label := widgets.NewQLabel2("Type Key", dialog, 0)
+	label := widgets.NewQLabel2(head, dialog, 0)
 	label.SetStyleSheet("color: green;")
 
 	buttons := widgets.NewQWidget(dialog, 0)
