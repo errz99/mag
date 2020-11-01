@@ -4,6 +4,12 @@ import (
 	"github.com/gotk3/gotk3/gtk"
 )
 
+// Accept ...
+var Accept = -5
+
+// Cancel ...
+var Cancel = -6
+
 // Message shows an Info, Warning or Error message
 func Message(w, h int, class, title, msg string, win gtk.IWindow) {
 	var dialog *gtk.MessageDialog
@@ -59,9 +65,9 @@ func OneEntry(title, head, entryLabel, entryText string,
 	content.PackStart(label, false, true, 4)
 	content.PackStart(hbox, false, true, 4)
 
-	dial.AddButton("Cancel", -6)
-	dial.AddButton("OK", -5)
-	dial.SetDefaultResponse(-5)
+	dial.AddButton("Cancel", Cancel)
+	dial.AddButton("OK", Accept)
+	dial.SetDefaultResponse(Accept)
 	dial.ShowAll()
 
 	answer := dial.Run()
@@ -148,11 +154,11 @@ func AccessKeyDialog(title, head string, win gtk.IWindow) (gtk.ResponseType, str
 
 	content.PackStart(hbox, false, true, 4)
 
-	dial.AddButton("OK", -5)
-	dial.SetDefaultResponse(-6)
+	dial.AddButton("OK", Accept)
+	dial.SetDefaultResponse(Cancel)
 	dial.ShowAll()
 
-	var answer gtk.ResponseType = -6
+	var answer gtk.ResponseType = Cancel
 	var entrName string
 
 	entry.Connect("changed", func() {
@@ -228,9 +234,9 @@ func ShowEditText(title, head, file, text string, parent gtk.IWindow) (gtk.Respo
 	tview.SetWrapMode(gtk.WRAP_WORD)
 	content.Add(tview)
 
-	dial.AddButton("Cancel", -6)
-	dial.AddButton("OK", -5)
-	dial.SetDefaultResponse(-6)
+	dial.AddButton("Cancel", Cancel)
+	dial.AddButton("OK", Accept)
+	dial.SetDefaultResponse(Cancel)
 	dial.ShowAll()
 
 	answer := dial.Run()
@@ -261,7 +267,7 @@ func TwoLabels(title, text1, text2 string, parent gtk.IWindow) {
 	content.Add(label1)
 	content.Add(label2)
 
-	dial.AddButton("OK", -5)
+	dial.AddButton("OK", Accept)
 	dial.ShowAll()
 
 	dial.Run()
