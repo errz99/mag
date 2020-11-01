@@ -5,10 +5,10 @@ import (
 )
 
 // Accept ...
-var Accept = -5
+var Accept gtk.ResponseType = -5
 
 // Cancel ...
-var Cancel = -6
+var Cancel gtk.ResponseType = -6
 
 // Message shows an Info, Warning or Error message
 func Message(w, h int, class, title, msg string, win gtk.IWindow) {
@@ -113,9 +113,9 @@ func MultiEntries(title, head string, entryLabels, entryTexts []string,
 		grid.Attach(entry, 1, i, 1, 1)
 	}
 
-	dial.AddButton("Cancel", -6)
-	dial.AddButton("OK", -5)
-	dial.SetDefaultResponse(-5)
+	dial.AddButton("Cancel", Cancel)
+	dial.AddButton("OK", Accept)
+	dial.SetDefaultResponse(Accept)
 	dial.ShowAll()
 
 	answer := dial.Run()
@@ -177,7 +177,7 @@ func AccessKeyDialog(title, head string, win gtk.IWindow) (gtk.ResponseType, str
 // ChooseAFile returns a file name (with path included)
 func ChooseAFileForOpen(title, current string, win gtk.IWindow) (gtk.ResponseType, string, error) {
 	fchooser, err := gtk.FileChooserDialogNewWith2Buttons(
-		title, win, gtk.FILE_CHOOSER_ACTION_OPEN, "Cancel", -6, "Open", -5)
+		title, win, gtk.FILE_CHOOSER_ACTION_OPEN, "Cancel", Cancel, "Open", Accept)
 
 	if err != nil {
 		return 0, "", err
@@ -193,7 +193,7 @@ func ChooseAFileForOpen(title, current string, win gtk.IWindow) (gtk.ResponseTyp
 // ChooseAFileForSave returns a file name (with path included)
 func ChooseAFileForSave(title, current string, win gtk.IWindow) (gtk.ResponseType, string, error) {
 	fchooser, err := gtk.FileChooserDialogNewWith2Buttons(
-		title, win, gtk.FILE_CHOOSER_ACTION_SAVE, "Cancel", -6, "Save", -5)
+		title, win, gtk.FILE_CHOOSER_ACTION_SAVE, "Cancel", Cancel, "Save", Accept)
 
 	if err != nil {
 		return 0, "", err
