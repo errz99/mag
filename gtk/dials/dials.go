@@ -139,11 +139,13 @@ func AccessKeyDialog(title, head string, win gtk.IWindow) (gtk.ResponseType, str
 	content, _ := dial.GetContentArea()
 	content.SetSpacing(4)
 
-	label, _ := gtk.LabelNew(head)
-	label.SetMarginTop(4)
-	label.SetMarginBottom(4)
-	label.SetMarkup("<span color=\"green\">" + head + "</span>")
-	content.Add(label)
+	if head != "" {
+		label, _ := gtk.LabelNew(head)
+		label.SetMarginTop(4)
+		label.SetMarginBottom(4)
+		label.SetMarkup("<span color=\"green\">" + head + "</span>")
+		content.Add(label)
+	}
 
 	hbox, _ := gtk.BoxNew(gtk.ORIENTATION_HORIZONTAL, 4)
 	entry, _ := gtk.EntryNew()

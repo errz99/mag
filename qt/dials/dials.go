@@ -296,15 +296,17 @@ func AccessKeyDialog(title, head string, win *widgets.QMainWindow) (int, string)
 	form := widgets.NewQFormLayout(entry)
 	entry.SetLayout(form)
 
-	//label := widgets.NewQLabel2("Type Key", dialog, 0)
-	label := widgets.NewQLabel2(head, dialog, 0)
-	label.SetStyleSheet("color: green;")
+	if head != "" {
+		label := widgets.NewQLabel2(head, dialog, 0)
+		label.SetStyleSheet("color: green;")
+		vbox.AddWidget(label, 0, core.Qt__AlignCenter)
+	}
 
 	buttons := widgets.NewQWidget(dialog, 0)
 	hbox := widgets.NewQHBoxLayout()
 	buttons.SetLayout(hbox)
 
-	vbox.AddWidget(label, 0, core.Qt__AlignCenter)
+	//vbox.AddWidget(label, 0, core.Qt__AlignCenter)
 	vbox.AddWidget(entry, 0, core.Qt__AlignCenter)
 	vbox.AddWidget(buttons, 0, core.Qt__AlignRight)
 
