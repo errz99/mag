@@ -11,29 +11,35 @@ import (
 	"github.com/therecipe/qt/widgets"
 )
 
-// Menu Help
-func aboutDialog() {
-	//widgets.QMessageBox.About()
-
-	// about, _ := gtk.AboutDialogNew()
-	//    about.SetTransientFor(mwin)
-	//    about.SetAuthors([]string{"M Arias"})
-	//    about.SetComments("Un comentario aqui")
-	//    about.SetCopyright("Copyryght aqui")
-	//    about.SetProgramName("Pasun")
-	//    about.SetVersion(VERSION)
-	//    about.SetWebsite("www.arteop.com")
-
-	// about.ShowAll()
-	// about.Run()
-	// about.Destroy()
-}
-
 //var md1a = "<span lang=\"utf-8\" color=\"green\"><b>"
 //var md1b =	"</b></span>"
 //
 //var md2a = "<span lang=\"utf-8\"><tt>"
 //var md2b =	"</tt></span>"
+
+// Accept ...
+var Accept = -5
+
+// Cancel ...
+var Cancel = -6
+
+// Menu Help
+func aboutDialog() {
+	// widgets.QMessageBox.About()
+
+	// about, _ := gtk.AboutDialogNew()
+	// about.SetTransientFor(mwin)
+	// about.SetAuthors([]string{"M Arias"})
+	// about.SetComments("Un comentario aqui")
+	// about.SetCopyright("Copyryght aqui")
+	// about.SetProgramName("Pasun")
+	// about.SetVersion(VERSION)
+	// about.SetWebsite("www.arteop.com")
+
+	// about.ShowAll()
+	// about.Run()
+	// about.Destroy()
+}
 
 // Message IWE, for Info, Warning, Error, "", dialogs
 func MessageIWE(w, h int, class, title, mess string, win *widgets.QMainWindow) {
@@ -100,7 +106,7 @@ func MessageIWED(w, h int, class, title, mess string, win *widgets.QDialog) {
 // MessageQuestion dialog
 func MessageQuestion(w, h int, title, mess string, win *widgets.QMainWindow) int {
 	dialog := widgets.NewQMessageBox(win)
-	answer := -6
+	answer := Cancel
 
 	dialog.SetWindowTitle("Question")
 	dialog.SetText(title)
@@ -113,7 +119,7 @@ func MessageQuestion(w, h int, title, mess string, win *widgets.QMainWindow) int
 
 	dialog.ConnectButtonClicked(func(button *widgets.QAbstractButton) {
 		if button.Text() == "Ok" {
-			answer = -5
+			answer = Accept
 		}
 	})
 
@@ -121,9 +127,9 @@ func MessageQuestion(w, h int, title, mess string, win *widgets.QMainWindow) int
 	answer = dialog.Exec()
 
 	if answer == 1024 {
-		answer = -5
+		answer = Accept
 	} else {
-		answer = -6
+		answer = Cancel
 	}
 
 	return answer
@@ -193,11 +199,11 @@ func DialogEntry(title, head, entryLabel, entryPre string,
 	okButton := widgets.NewQPushButton2("Ok", dialog)
 	hbox.AddWidget(okButton, 0, core.Qt__AlignRight)
 
-	var answer = -6
+	var answer = Cancel
 	var entryText = entryPre
 
 	okButton.ConnectClicked(func(bool) {
-		answer = -5
+		answer = Accept
 		if lineEdit.Text() != "" {
 			entryText = lineEdit.Text()
 		}
@@ -209,7 +215,7 @@ func DialogEntry(title, head, entryLabel, entryPre string,
 	})
 
 	dialog.Show()
-	answer = dialog.Exec() // hmmmm, tal vez solo dialog.Exec()
+	dialog.Exec()
 
 	return answer, entryText
 }
@@ -255,11 +261,11 @@ func DialogEntries(title, head string, entryLabels, entryTexts []string,
 	okButton := widgets.NewQPushButton2("Ok", dialog)
 	hbox.AddWidget(okButton, 0, core.Qt__AlignRight)
 
-	var answer = -6
+	var answer = Cancel
 	var lineTexts []string
 
 	okButton.ConnectClicked(func(bool) {
-		answer = -5
+		answer = Accept
 		for _, lineEdit := range lineEdits {
 			lineTexts = append(lineTexts, lineEdit.Text())
 		}
@@ -311,11 +317,11 @@ func AccessKeyDialog(title, head string, win *widgets.QMainWindow) (int, string)
 	okButton := widgets.NewQPushButton2("Ok", dialog)
 	hbox.AddWidget(okButton, 0, core.Qt__AlignRight)
 
-	var answer = -6
+	var answer = Cancel
 	var entryText string
 
 	okButton.ConnectClicked(func(bool) {
-		answer = -5
+		answer = Accept
 		entryText = lineEdit.Text()
 		dialog.DestroyQDialog()
 	})
