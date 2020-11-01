@@ -63,6 +63,7 @@ func MessageIWE(w, h int, class, title, mess string, win *widgets.QMainWindow) {
 	mbox.SetText(title)
 	mbox.SetInformativeText(mess)
 	mbox.Show()
+	mbox.Exec()
 }
 
 // MessageIWED ...
@@ -93,6 +94,7 @@ func MessageIWED(w, h int, class, title, mess string, win *widgets.QDialog) {
 	mbox.SetText(title)
 	mbox.SetInformativeText(mess)
 	mbox.Show()
+	mbox.Exec()
 }
 
 // MessageQuestion dialog
@@ -153,6 +155,7 @@ func DialogTwoLabels(title, text1, text2 string, win *widgets.QMainWindow) {
 	})
 
 	dialog.Show()
+	dialog.Exec()
 }
 
 // DialogEntry for an entry alone
@@ -206,7 +209,7 @@ func DialogEntry(title, head, entryLabel, entryPre string,
 	})
 
 	dialog.Show()
-	dialog.Exec()
+	answer = dialog.Exec() // hmmmm, tal vez solo dialog.Exec()
 
 	return answer, entryText
 }
