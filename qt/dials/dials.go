@@ -24,21 +24,8 @@ var Accept = -5
 var Cancel = -6
 
 // Menu Help
-func aboutDialog() {
-	// widgets.QMessageBox.About()
-
-	// about, _ := gtk.AboutDialogNew()
-	// about.SetTransientFor(mwin)
-	// about.SetAuthors([]string{"M Arias"})
-	// about.SetComments("Un comentario aqui")
-	// about.SetCopyright("Copyryght aqui")
-	// about.SetProgramName("Pasun")
-	// about.SetVersion(VERSION)
-	// about.SetWebsite("www.arteop.com")
-
-	// about.ShowAll()
-	// about.Run()
-	// about.Destroy()
+func AboutDialog(title, text string, parent *widgets.QMainWindow) {
+	widgets.QMessageBox_About(parent, title, text)
 }
 
 // Message IWE, for Info, Warning, Error, "", dialogs
@@ -192,6 +179,9 @@ func DialogEntry(title, head, entryLabel, entryPre string,
 
 	lineEdit := widgets.NewQLineEdit(nil)
 	lineEdit.SetPlaceholderText(entryPre)
+	if !visible {
+		lineEdit.SetEchoMode(widgets.QLineEdit__Password)
+	}
 	form.AddRow3(entryLabel, lineEdit)
 
 	cancelButton := widgets.NewQPushButton2("Cancel", dialog)
@@ -248,7 +238,7 @@ func DialogEntries(title, head string, entryLabels, entryTexts []string,
 
 	for i, entryText := range entryTexts {
 		lineEdit := widgets.NewQLineEdit(nil)
-		if visibles[i] == true {
+		if !visibles[i] {
 			lineEdit.SetEchoMode(widgets.QLineEdit__Password)
 		}
 		lineEdit.SetText(entryText)
