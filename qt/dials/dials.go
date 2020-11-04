@@ -29,7 +29,7 @@ func AboutDialog(title, text string, parent *widgets.QMainWindow) {
 }
 
 // Message IWE, for Info, Warning, Error, "", dialogs
-func MessageIWE(w, h int, class, title, mess string, win *widgets.QMainWindow) {
+func MessageIWE(w, h int, class, title, msg, info string, win *widgets.QMainWindow) {
 	mbox := widgets.NewQMessageBox(win)
 
 	switch class {
@@ -52,15 +52,15 @@ func MessageIWE(w, h int, class, title, mess string, win *widgets.QMainWindow) {
 		mbox.SetIcon(widgets.QMessageBox__NoIcon)
 	}
 
-	mbox.SetWindowTitle(class)
-	mbox.SetText(title)
-	mbox.SetInformativeText(mess)
+	mbox.SetWindowTitle(title)
+	mbox.SetText(msg)
+	mbox.SetInformativeText(info)
 	mbox.Show()
 	mbox.Exec()
 }
 
 // MessageIWED ...
-func MessageIWED(w, h int, class, title, mess string, win *widgets.QDialog) {
+func MessageIWED(w, h int, class, title, msg, info string, win *widgets.QDialog) {
 	mbox := widgets.NewQMessageBox(win)
 
 	switch class {
@@ -83,9 +83,9 @@ func MessageIWED(w, h int, class, title, mess string, win *widgets.QDialog) {
 		mbox.SetIcon(widgets.QMessageBox__NoIcon)
 	}
 
-	mbox.SetWindowTitle(class)
-	mbox.SetText(title)
-	mbox.SetInformativeText(mess)
+	mbox.SetWindowTitle(title)
+	mbox.SetText(msg)
+	mbox.SetInformativeText(info)
 	mbox.Show()
 	mbox.Exec()
 }
