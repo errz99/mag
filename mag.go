@@ -1,7 +1,7 @@
 package mag
 
 import (
-	"os"
+//"fmt"
 )
 
 func Hello() string {
