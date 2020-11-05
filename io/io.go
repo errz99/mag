@@ -96,7 +96,17 @@ func ReadGob(filePath string, object interface{}) error {
 	return err
 }
 
-func FileExists(name string) bool {
+// FileExists returns true if the filename exists and is not a directory.
+func FileExists(filename string) bool {
+	info, err := os.Stat(filename)
+	if os.IsNotExist(err) {
+		return false
+	}
+	return !info.IsDir()
+}
+
+// FileOrDirExists returns true if name exists as filename or directory.
+func FileOrDirExists(name string) bool {
 	if _, err := os.Stat(name); err != nil {
 		if os.IsNotExist(err) {
 			return false
