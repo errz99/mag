@@ -109,8 +109,8 @@ func musiciansTree(win gtk.IWindow) (gtk.ResponseType, int, string) {
 		{4, "Jerry", "Garcia"},
 	}
 
-	treeview := tree.CreateTreeView(titles, minWidth)
-	store := tree.CreateListStore(gtypes, data)
+	treeview, _ := tree.CreateTreeView(titles, minWidth)
+	store, _ := tree.CreateListStore(gtypes, data)
 
 	treeview.SetModel(store)
 	treeview.SetVExpand(true)

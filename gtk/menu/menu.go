@@ -4,6 +4,7 @@ import (
 	"github.com/gotk3/gotk3/gtk"
 )
 
+// FillWithItems creates menu items from a slice of names and icons.
 func FillWithItems(menu *gtk.Menu, items []*gtk.MenuItem, names []string, icons []string) {
 	n := 0
 

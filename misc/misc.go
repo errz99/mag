@@ -3,6 +3,7 @@ package misc
 import (
 	"errors"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -50,13 +51,21 @@ func DateTodayJp() string {
 }
 
 // DateJpToEs returns a string with the passed 'japanese' YYYYMMDD date to a
-// 'spanish' DD/MM/YYYY (separator must be included)
-func DateJpToEs(date, sep string) (string, error) {
+// 'english' MM/DD/YYYY or 'spanish' DD/MM/YYYY (separator must be included)
+func DateJpToEnEs(date, c, sep string) (string, error) {
 	if IsDateJp(date) {
-		ye := date[:4]
-		mo := date[4:6]
-		da := date[6:]
-		return da + sep + mo + sep + ye, nil
+		year := date[:4]
+		month := date[4:6]
+		day := date[6:]
+
+		switch strings.ToLower(c) {
+		case "es":
+			return day + sep + month + sep + year, nil
+		case "en":
+			return month + sep + day + sep + year, nil
+		default:
+			return year + sep + month + sep + day, nil
+		}
 	}
 
 	return "", errors.New("Incorrect date: " + date)

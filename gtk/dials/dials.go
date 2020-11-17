@@ -177,7 +177,8 @@ func AccessKeyDialog(title, head string, win gtk.IWindow) (gtk.ResponseType, str
 }
 
 // ChooseAFile returns a file name (with path included)
-func ChooseAFileForOpen(title, current string, win gtk.IWindow) (gtk.ResponseType, string, error) {
+func ChooseAFileForOpen(
+	title, current string, win gtk.IWindow) (gtk.ResponseType, string, error) {
 	fchooser, err := gtk.FileChooserDialogNewWith2Buttons(
 		title, win, gtk.FILE_CHOOSER_ACTION_OPEN, "Cancel", Cancel, "Open", Accept)
 
@@ -193,7 +194,8 @@ func ChooseAFileForOpen(title, current string, win gtk.IWindow) (gtk.ResponseTyp
 }
 
 // ChooseAFileForSave returns a file name (with path included)
-func ChooseAFileForSave(title, current string, win gtk.IWindow) (gtk.ResponseType, string, error) {
+func ChooseAFileForSave(
+	title, current string, win gtk.IWindow) (gtk.ResponseType, string, error) {
 	fchooser, err := gtk.FileChooserDialogNewWith2Buttons(
 		title, win, gtk.FILE_CHOOSER_ACTION_SAVE, "Cancel", Cancel, "Save", Accept)
 
@@ -209,7 +211,8 @@ func ChooseAFileForSave(title, current string, win gtk.IWindow) (gtk.ResponseTyp
 }
 
 // ShowEditText shows a text in a TextView and returns its edition
-func ShowEditText(title, head, file, text string, parent gtk.IWindow) (gtk.ResponseType, string) {
+func ShowEditText(
+	title, head, file, text string, parent gtk.IWindow) (gtk.ResponseType, string) {
 	dial, _ := gtk.DialogNew()
 	dial.SetTransientFor(parent)
 	dial.SetTitle(title)

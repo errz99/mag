@@ -5,32 +5,44 @@ import (
 	"github.com/gotk3/gotk3/gtk"
 )
 
-func CreateTreeView(cnames []string, minW []int) *gtk.TreeView {
+func CreateTreeView(cnames []string, minW []int) (*gtk.TreeView, error) {
 	treev, _ := gtk.TreeViewNew()
 	for i, cname := range cnames {
-		renderer, _ := gtk.CellRendererTextNew()
-		col, _ := gtk.TreeViewColumnNewWithAttribute(cname, renderer, "text", i)
-		col.SetResizable(true)
-		col.SetMinWidth(minW[i])
-		treev.AppendColumn(col)
+		if renderer, err := gtk.CellRendererTextNew(); err != nil {
+			return nil, err
+		} else {
+			if col, err := gtk.TreeViewColumnNewWithAttribute(
+				cname, renderer, "text", i); err != nil {
+				return nil, err
+			} else {
+				col.SetResizable(true)
+				col.SetMinWidth(minW[i])
+				treev.AppendColumn(col)
+			}
+		}
 	}
-	return treev
+	return treev, nil
 }
 
-func CreateListStore(gtypes []glib.Type, data [][]interface{}) *gtk.ListStore {
+func CreateListStore(gtypes []glib.Type, data [][]interface{}) (*gtk.ListStore, error) {
 	var nu []int
 	for i := 0; i < len(gtypes); i++ {
 		nu = append(nu, i)
 	}
-	store, _ := gtk.ListStoreNew(gtypes...)
-	for _, row := range data {
-		iter := store.Append()
-		store.Set(iter, nu, row)
+	store, err := gtk.ListStoreNew(gtypes...)
+	if err != nil {
+		return nil, err
+	} else {
+		for _, row := range data {
+			iter := store.Append()
+			store.Set(iter, nu, row)
+		}
 	}
-	return store
+	return store, nil
 }
 
-func UpdateListStore(store *gtk.ListStore, gtypes []glib.Type, data [][]interface{}) *gtk.ListStore {
+func UpdateListStore(store *gtk.ListStore, gtypes []glib.Type,
+	data [][]interface{}) *gtk.ListStore {
 	var nu []int
 	for i := 0; i < len(gtypes); i++ {
 		nu = append(nu, i)
