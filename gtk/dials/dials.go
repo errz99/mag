@@ -1,7 +1,9 @@
 package dials
 
 import (
+	"github.com/errz99/mag"
 	"github.com/gotk3/gotk3/gtk"
+	"strings"
 )
 
 // Accept ...
@@ -9,6 +11,19 @@ var Accept gtk.ResponseType = -5
 
 // Cancel ...
 var Cancel gtk.ResponseType = -6
+
+// Initial language set
+var lang mag.Language = mag.Lang
+
+func SetLanguage(lng string) {
+	switch strings.ToLower(lng) {
+	case "es":
+		lang = mag.Spanish
+	case "en":
+		lang = mag.English
+	default:
+	}
+}
 
 // Message shows an Info, Warning or Error message
 func Message(w, h int, class, title, msg string, win gtk.IWindow) {
@@ -65,8 +80,8 @@ func OneEntry(title, head, entryLabel, entryText string,
 	content.PackStart(label, false, true, 4)
 	content.PackStart(hbox, false, true, 4)
 
-	dial.AddButton("Cancel", Cancel)
-	dial.AddButton("OK", Accept)
+	dial.AddButton(lang["ButtonCancel"], Cancel)
+	dial.AddButton(lang["ButtonOK"], Accept)
 	dial.SetDefaultResponse(Accept)
 	dial.ShowAll()
 
@@ -113,8 +128,8 @@ func MultiEntries(title, head string, entryLabels, entryTexts []string,
 		grid.Attach(entry, 1, i, 1, 1)
 	}
 
-	dial.AddButton("Cancel", Cancel)
-	dial.AddButton("OK", Accept)
+	dial.AddButton(lang["ButtonCancel"], Cancel)
+	dial.AddButton(lang["ButtonOK"], Accept)
 	dial.SetDefaultResponse(Accept)
 	dial.ShowAll()
 
@@ -156,7 +171,7 @@ func AccessKeyDialog(title, head string, win gtk.IWindow) (gtk.ResponseType, str
 
 	content.PackStart(hbox, false, true, 4)
 
-	dial.AddButton("OK", Accept)
+	dial.AddButton(lang["ButtonOK"], Accept)
 	dial.SetDefaultResponse(Cancel)
 	dial.ShowAll()
 
@@ -180,7 +195,8 @@ func AccessKeyDialog(title, head string, win gtk.IWindow) (gtk.ResponseType, str
 func ChooseAFileForOpen(
 	title, current string, win gtk.IWindow) (gtk.ResponseType, string, error) {
 	fchooser, err := gtk.FileChooserDialogNewWith2Buttons(
-		title, win, gtk.FILE_CHOOSER_ACTION_OPEN, "Cancel", Cancel, "Open", Accept)
+		title, win, gtk.FILE_CHOOSER_ACTION_OPEN,
+		lang["ButtonCancel"], Cancel, lang["ButtonOpen"], Accept)
 
 	if err != nil {
 		return 0, "", err
@@ -197,7 +213,8 @@ func ChooseAFileForOpen(
 func ChooseAFileForSave(
 	title, current string, win gtk.IWindow) (gtk.ResponseType, string, error) {
 	fchooser, err := gtk.FileChooserDialogNewWith2Buttons(
-		title, win, gtk.FILE_CHOOSER_ACTION_SAVE, "Cancel", Cancel, "Save", Accept)
+		title, win, gtk.FILE_CHOOSER_ACTION_SAVE,
+		lang["ButtonCancel"], Cancel, lang["ButtonSave"], Accept)
 
 	if err != nil {
 		return 0, "", err
@@ -239,8 +256,8 @@ func ShowEditText(
 	tview.SetWrapMode(gtk.WRAP_WORD)
 	content.Add(tview)
 
-	dial.AddButton("Cancel", Cancel)
-	dial.AddButton("OK", Accept)
+	dial.AddButton(lang["ButtonCancel"], Cancel)
+	dial.AddButton(lang["ButtonOK"], Accept)
 	dial.SetDefaultResponse(Cancel)
 	dial.ShowAll()
 
@@ -272,7 +289,7 @@ func TwoLabels(title, text1, text2 string, parent gtk.IWindow) {
 	content.Add(label1)
 	content.Add(label2)
 
-	dial.AddButton("OK", Accept)
+	dial.AddButton(lang["ButtonOK"], Accept)
 	dial.ShowAll()
 
 	dial.Run()

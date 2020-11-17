@@ -23,6 +23,8 @@ func mainWindow() {
 	cL := "|    "
 	cR := "    |"
 
+	dials.SetLanguage("es")
+
 	window, _ := gtk.WindowNew(gtk.WINDOW_TOPLEVEL)
 	window.SetPosition(gtk.WIN_POS_CENTER)
 	window.SetTitle("Dialogs")
@@ -50,7 +52,7 @@ func mainWindow() {
 		"Save a File",
 		"One Entry",
 		"Multi Entries",
-		"One Password",
+		"Access Key",
 		"Show Edit Text",
 		"Exit"}
 
@@ -115,7 +117,7 @@ func mainWindow() {
 				}
 
 			case "8":
-				resp, passw := dials.OnePassword("Title", window)
+				resp, passw := dials.AccessKeyDialog("Title", "Head", window)
 				if resp == -5 || resp == -1 {
 					dials.Message(0, 0, "Info", "Entry text", passw, window)
 				}

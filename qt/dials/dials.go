@@ -6,6 +6,7 @@ import (
 	//"fmt"
 	//"os"
 
+	"github.com/errz99/mag"
 	"github.com/therecipe/qt/core"
 	//"github.com/therecipe/qt/gui"
 	"github.com/therecipe/qt/widgets"
@@ -22,6 +23,19 @@ var Accept = -5
 
 // Cancel ...
 var Cancel = -6
+
+// Initial language set
+var lang mag.Language = mag.Lang
+
+func SetLanguage(lng string) {
+	switch strings.ToLower(lng) {
+	case "es":
+		lang = mag.Spanish
+	case "en":
+		lang = mag.English
+	default:
+	}
+}
 
 // Menu Help
 func AboutDialog(title, text string, parent *widgets.QMainWindow) {
@@ -105,7 +119,7 @@ func MessageQuestion(w, h int, title, mess string, win *widgets.QMainWindow) int
 	dialog.SetDefaultButton2(widgets.QMessageBox__Cancel)
 
 	dialog.ConnectButtonClicked(func(button *widgets.QAbstractButton) {
-		if button.Text() == "Ok" {
+		if button.Text() == lang["ButtonOK"] {
 			answer = Accept
 		}
 	})
@@ -184,9 +198,9 @@ func DialogEntry(title, head, entryLabel, entryPre string,
 	}
 	form.AddRow3(entryLabel, lineEdit)
 
-	cancelButton := widgets.NewQPushButton2("Cancel", dialog)
+	cancelButton := widgets.NewQPushButton2(lang["ButtonCancel"], dialog)
 	hbox.AddWidget(cancelButton, 0, core.Qt__AlignRight)
-	okButton := widgets.NewQPushButton2("Ok", dialog)
+	okButton := widgets.NewQPushButton2(lang["ButtonOK"], dialog)
 	hbox.AddWidget(okButton, 0, core.Qt__AlignRight)
 
 	var answer = Cancel
@@ -246,9 +260,9 @@ func DialogEntries(title, head string, entryLabels, entryTexts []string,
 		lineEdits = append(lineEdits, lineEdit)
 	}
 
-	cancelButton := widgets.NewQPushButton2("Cancel", dialog)
+	cancelButton := widgets.NewQPushButton2(lang["ButtonCancel"], dialog)
 	hbox.AddWidget(cancelButton, 0, core.Qt__AlignRight)
-	okButton := widgets.NewQPushButton2("Ok", dialog)
+	okButton := widgets.NewQPushButton2(lang["ButtonOK"], dialog)
 	hbox.AddWidget(okButton, 0, core.Qt__AlignRight)
 
 	var answer = Cancel
@@ -306,7 +320,7 @@ func AccessKeyDialog(title, head string, win *widgets.QMainWindow) (int, string)
 	lineEdit.SetEchoMode(widgets.QLineEdit__Password)
 	form.AddRow3("", lineEdit)
 
-	okButton := widgets.NewQPushButton2("Ok", dialog)
+	okButton := widgets.NewQPushButton2(lang["ButtonOK"], dialog)
 	hbox.AddWidget(okButton, 0, core.Qt__AlignRight)
 
 	var answer = Cancel
