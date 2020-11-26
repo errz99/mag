@@ -8,8 +8,8 @@ import (
 func FillWithItems(menu *gtk.Menu, items []*gtk.MenuItem, names []string, icons []string) {
 	n := 0
 
-	for i := 0; i < len(names); i++ {
-		if names[i] == "-" {
+	for i, name := range names {
+		if name == "-" {
 			sep, _ := gtk.SeparatorMenuItemNew()
 			sep.Show()
 			menu.Append(sep)
@@ -17,7 +17,7 @@ func FillWithItems(menu *gtk.Menu, items []*gtk.MenuItem, names []string, icons 
 
 		} else {
 			if icons != nil && icons[i] != "-" {
-				lbl, _ := gtk.LabelNew(names[i])
+				lbl, _ := gtk.LabelNew(name)
 				icon, _ := gtk.ImageNew()
 				icon.SetSizeRequest(16, 16)
 				icon.SetFromIconName(icons[i], gtk.ICON_SIZE_MENU)
@@ -29,14 +29,14 @@ func FillWithItems(menu *gtk.Menu, items []*gtk.MenuItem, names []string, icons 
 
 				items[n].Show()
 				menu.Append(items[n])
-				n++
 
 			} else {
-				items[n], _ = gtk.MenuItemNewWithLabel(names[i])
+				items[n], _ = gtk.MenuItemNewWithLabel(name)
 				items[n].Show()
 				menu.Append(items[n])
-				n++
 			}
+
+			n++
 		}
 	}
 }
