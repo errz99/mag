@@ -1,8 +1,8 @@
 package misc
 
 import (
-    "fmt"
 	"errors"
+	"fmt"
 	"strconv"
 	"strings"
 	"time"
@@ -72,23 +72,22 @@ func DateJpToEnEs(date, c, sep string) (string, error) {
 	return "", errors.New("Incorrect date: " + date)
 }
 
-// ProcessColor processes a string like 'rgb(255,0,0)' or 'rgba(255,0,0,0.50000)'
-// and returns a string like '#ff0000
+// ProcessColor processes a string like 'rgb(255,0,0)'
+// or 'rgba(255,0,0,0.50000)' and returns a string like '#ff0000
 func ProcessColor(temp string) string {
-		color := "#000000"
+	color := "#000000"
 
-		temp = strings.Replace(temp, "rgb", "", -1)
-		temp = strings.Replace(temp, "a", "", -1)
-		temp = strings.Replace(temp, "(", "", -1)
-		temp = strings.Replace(temp, ")", "", -1)
-		colors := strings.Split(temp, ",")
+	temp = strings.Replace(temp, "rgb", "", -1)
+	temp = strings.Replace(temp, "a", "", -1)
+	temp = strings.Replace(temp, "(", "", -1)
+	temp = strings.Replace(temp, ")", "", -1)
+	colors := strings.Split(temp, ",")
 
-		if len(colors) >= 3 {
-			red, _ := strconv.Atoi(colors[0])
-			green, _ := strconv.Atoi(colors[1])
-			blue, _ := strconv.Atoi(colors[2])
-			color = fmt.Sprintf("#%0.2x%0.2x%0.2x", red, green, blue)
-		}
-		return color
+	if len(colors) >= 3 {
+		red, _ := strconv.Atoi(colors[0])
+		green, _ := strconv.Atoi(colors[1])
+		blue, _ := strconv.Atoi(colors[2])
+		color = fmt.Sprintf("#%0.2x%0.2x%0.2x", red, green, blue)
 	}
-}	
+	return color
+}
