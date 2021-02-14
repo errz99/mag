@@ -56,6 +56,20 @@ func Question(w, h int, title, msg string, win gtk.IWindow) gtk.ResponseType {
 	return answer
 }
 
+// ColorChooser returns a color selected with gtk.ColorChooserDialog
+func ColorChooser(title string, win gtk.IWindow) (gtk.ResponseType, *gdk.RGBA) {
+	var color *gdk.RGBA
+	dialog, _ := gtk.ColorChooserDialogNew(title, win)
+
+	response := dialog.Run()
+	if response == -5 {
+		color = dialog.GetRGBA()
+	}
+
+	dialog.Destroy()
+	return response, color
+}
+
 // OneEntry shows a dialog with an entry widget
 func OneEntry(title, head, entryLabel, entryText string,
 	visible bool, win gtk.IWindow) (gtk.ResponseType, string) {
