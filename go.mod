@@ -1,10 +1,9 @@
-module mag
+module github.com/errz99/mag
 
 go 1.18
 
 require (
 	fyne.io/fyne v1.4.3
-	github.com/errz99/mag v0.0.0-20210214164107-222da76220f1
 	github.com/gotk3/gotk3 v0.6.1
 	github.com/therecipe/qt v0.0.0-20200904063919-c0c124a5770d
 )
